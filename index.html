@@ -61,14 +61,18 @@
           <h3 class="text-lg font-semibold text-gray-100">{{ image.description }}</h3>
           <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
           <div class="flex-1"></div>
-          <span class="inline-block text-xs px-2 py-1 rounded-full bg-gray-900 text-gray-300 mt-2 self-start">
-            {{ image.tag }}
-          </span>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span v-for="tag in (typeof image.tag === 'string' ? image.tag.split(',').map(t => t.trim()).filter(Boolean) : (Array.isArray(image.tag) ? image.tag : []))"
+                  :key="tag"
+                  class="inline-block text-xs px-2 py-1 rounded-full bg-gray-900 text-gray-300 border border-gray-700 mr-1 mb-1">
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="app.js?v=1747624942"></script>
+  <script src="app.js?v=1747626250"></script>
 </body>
 </html>

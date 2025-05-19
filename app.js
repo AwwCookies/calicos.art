@@ -11,12 +11,23 @@ Vue.createApp({
     filteredImages() {
       return this.images.filter(img => {
         const matchesSearch = img.description.toLowerCase().includes(this.search.toLowerCase());
-        const matchesTag = this.activeTag ? img.tag === this.activeTag : true;
+        // Support multiple tags per image (comma or array)
+        let tags = img.tag;
+        if (typeof tags === 'string') tags = tags.split(',').map(t => t.trim()).filter(Boolean);
+        if (!Array.isArray(tags)) tags = [];
+        const matchesTag = this.activeTag ? tags.includes(this.activeTag) : true;
         return matchesSearch && matchesTag;
       });
     },
     uniqueTags() {
-      return [...new Set(this.images.map(img => img.tag))];
+      // Collect all tags from all images, flatten, dedupe
+      const tagSet = new Set();
+      this.images.forEach(img => {
+        let tags = img.tag;
+        if (typeof tags === 'string') tags = tags.split(',').map(t => t.trim()).filter(Boolean);
+        if (Array.isArray(tags)) tags.forEach(t => tagSet.add(t));
+      });
+      return [...tagSet];
     }
   },
   methods: {
