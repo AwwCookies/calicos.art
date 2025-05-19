@@ -3,7 +3,8 @@ Vue.createApp({
     return {
       images: [],
       search: '',
-      activeTag: ''
+      activeTag: '',
+      loadingImages: new Set()
     };
   },
   computed: {
@@ -22,6 +23,12 @@ Vue.createApp({
     formatDate(dateStr) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(dateStr).toLocaleDateString(undefined, options);
+    },
+    handleImageLoad(url) {
+      this.loadingImages.delete(url);
+    },
+    handleImageError(url) {
+      this.loadingImages.delete(url);
     }
   },
   mounted() {
@@ -29,6 +36,7 @@ Vue.createApp({
       .then(res => res.json())
       .then(data => {
         this.images = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        this.loadingImages = new Set(this.images.map(img => img.url));
       })
       .catch(err => console.error("Error loading data.json:", err));
   }
