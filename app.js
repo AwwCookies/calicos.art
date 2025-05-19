@@ -39,7 +39,13 @@ Vue.createApp({
     fetch("data.json")
       .then(res => res.json())
       .then(data => {
-        this.images = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Sort by 'order' if present, otherwise by date
+        this.images = data.sort((a, b) => {
+          if (a.order !== undefined && b.order !== undefined) {
+            return a.order - b.order;
+          }
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
         // Set loadingImages immediately so spinner shows as soon as possible
         this.loadingImages = new Set(this.images.map(img => img.url));
         this.$forceUpdate();
