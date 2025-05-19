@@ -41,14 +41,14 @@
         <!-- Image Container w/ Spinner -->
         <div class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden">
           <img
+            v-show="!loadingImages.has(image.url)"
             :src="image.url"
             alt="Artwork"
             class="w-full h-full object-cover transition-opacity duration-500"
-            :class="{ 'opacity-0': loadingImages.has(image.url) }"
             @load="handleImageLoad(image.url)"
             @error="handleImageError(image.url)"
           >
-          <div v-if="loadingImages.has(image.url)" class="absolute">
+          <div v-show="loadingImages.has(image.url)" class="flex items-center justify-center w-full h-72 bg-gray-900 rounded-t-xl">
             <svg class="animate-spin h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />

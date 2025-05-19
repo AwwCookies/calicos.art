@@ -25,10 +25,14 @@ Vue.createApp({
       return new Date(dateStr).toLocaleDateString(undefined, options);
     },
     handleImageLoad(url) {
-      this.loadingImages.delete(url);
+      const newSet = new Set(this.loadingImages);
+      newSet.delete(url);
+      this.loadingImages = newSet;
     },
     handleImageError(url) {
-      this.loadingImages.delete(url);
+      const newSet = new Set(this.loadingImages);
+      newSet.delete(url);
+      this.loadingImages = newSet;
     }
   },
   mounted() {
@@ -36,7 +40,9 @@ Vue.createApp({
       .then(res => res.json())
       .then(data => {
         this.images = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Set loadingImages immediately so spinner shows as soon as possible
         this.loadingImages = new Set(this.images.map(img => img.url));
+        this.$forceUpdate();
       })
       .catch(err => console.error("Error loading data.json:", err));
   }
