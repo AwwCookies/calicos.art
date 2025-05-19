@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art Folio</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 font-light">
+  <div id="app" class="p-6 max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-center mb-2 text-gray-100">Art by Jasper Calico</h1>
+    <p class="text-center mb-6 text-gray-400"></p>
+
+    <input v-model="search" type="text" placeholder="Search descriptions..." class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-500">
+
+    <div class="mb-4">
+      <p class="text-sm text-gray-400 mb-1">Filter by tags:</p>
+      <div class="flex flex-wrap gap-2">
+        <button v-for="tag in uniqueTags" :key="tag" @click="activeTag = activeTag === tag ? '' : tag" class="px-3 py-1 rounded-full border text-sm"
+          :class="activeTag === tag ? 'bg-gray-700 text-white border-gray-400' : 'border-gray-600 text-gray-400 hover:border-white hover:text-white'">
+          {{ tag }}
+        </button>
+      </div>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div v-for="image in filteredImages" :key="image.url" class="bg-gray-800 rounded-xl shadow overflow-hidden">
+        <img :src="image.url" alt="Artwork" class="w-full h-auto block mx-auto">
+        <div class="p-4">
+          <h3 class="text-lg font-semibold text-gray-100">{{ image.description }}</h3>
+          <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
+          <span class="inline-block text-xs px-2 py-1 rounded-full bg-gray-700 text-gray-300">
+            {{ image.tag }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
