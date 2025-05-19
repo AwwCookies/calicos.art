@@ -17,6 +17,18 @@
 - **Image validation:** Warn if an image is too large or the format is unsupported.
 - **Backup/restore:** One-click backup and restore for data.json.
 
+**Additional Suggestions:**
+- **Thumbnail Loading Indicator:** Show a loading spinner or placeholder while thumbnails load.
+- **Image Caching to Disk:** Optionally cache thumbnails to disk for faster reloads.
+- **Multi-Tag Search:** Allow searching for multiple tags at once and highlight matches.
+- **Context Menu Actions:** Right-click menu for actions like Edit, Delete, Open in Browser, Copy URL.
+- **Drag-and-Drop File Support:** Drag images from desktop to add new entries.
+- **Sorting Options:** Sort by date, tag, or custom order.
+- **Persistent Selection:** Remember last selected item after filtering or reordering.
+- **Keyboard Shortcuts:** Shortcuts for actions like delete, edit, move up/down.
+- **Error Feedback:** Show user-friendly error messages if image loading fails.
+- **Pagination or Lazy Loading:** For large datasets, paginate or lazy-load items.
+
 ## DevOps/Publishing
 - **Deploy button:** Trigger a Cloudflare Pages build from the GUI.
 - **Build notifications:** Show build progress or notify on failure/success.

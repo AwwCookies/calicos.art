@@ -89,7 +89,7 @@
           <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
           <div class="flex-1"></div>
           <div class="flex flex-wrap gap-2 mt-2">
-            <button v-for="tag in (typeof image.tag === 'string' ? image.tag.split(',').map(t => t.trim()).filter(Boolean) : (Array.isArray(image.tag) ? image.tag : []))"
+            <button v-for="tag in image.tags"
                   :key="tag"
                   @click="activeTag = activeTag === tag ? '' : tag"
                   class="inline-block text-xs px-2 py-1 rounded-full border border-gray-700 mr-1 mb-1 focus:outline-none transition cursor-pointer"
@@ -104,6 +104,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=1747636701"></script>
+  <script src="app.js?v=1747673329"></script>
 </body>
 </html>

@@ -13,10 +13,8 @@ Vue.createApp({
     filteredImages() {
       return this.images.filter(img => {
         const matchesSearch = img.description.toLowerCase().includes(this.search.toLowerCase());
-        // Support multiple tags per image (comma or array)
-        let tags = img.tag;
-        if (typeof tags === 'string') tags = tags.split(',').map(t => t.trim()).filter(Boolean);
-        if (!Array.isArray(tags)) tags = [];
+        // Use tags array
+        let tags = Array.isArray(img.tags) ? img.tags : [];
         const matchesTag = this.activeTag ? tags.includes(this.activeTag) : true;
         return matchesSearch && matchesTag;
       });
@@ -25,9 +23,8 @@ Vue.createApp({
       // Collect all tags from all images, flatten, dedupe
       const tagSet = new Set();
       this.images.forEach(img => {
-        let tags = img.tag;
-        if (typeof tags === 'string') tags = tags.split(',').map(t => t.trim()).filter(Boolean);
-        if (Array.isArray(tags)) tags.forEach(t => tagSet.add(t));
+        let tags = Array.isArray(img.tags) ? img.tags : [];
+        tags.forEach(t => tagSet.add(t));
       });
       return [...tagSet];
     }
