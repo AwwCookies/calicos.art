@@ -18,31 +18,31 @@
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-white font-light">
-  <div id="app" class="p-6 max-w-4xl mx-auto">
-    <h1 class="text-4xl font-bold text-center mb-2">Art by JasperCalico</h1>
+<body class="bg-gray-900 text-gray-200 font-light">
+  <div id="app" class="p-6 max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-center mb-2 text-gray-100">Art by Jasper Calico</h1>
     <p class="text-center mb-6 text-gray-400"></p>
 
-    <input v-model="search" type="text" placeholder="Search descriptions..." class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 placeholder-gray-500">
+    <input v-model="search" type="text" placeholder="Search descriptions..." class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition">
 
     <div class="mb-4">
       <p class="text-sm text-gray-400 mb-1">Filter by tags:</p>
       <div class="flex flex-wrap gap-2">
-        <button v-for="tag in uniqueTags" :key="tag" @click="activeTag = activeTag === tag ? '' : tag" class="px-3 py-1 rounded-full border text-sm"
-          :class="activeTag === tag ? 'bg-pink-500 text-white border-pink-500' : 'border-gray-500 text-gray-400 hover:border-white hover:text-white'">
+        <button v-for="tag in uniqueTags" :key="tag" @click="activeTag = activeTag === tag ? '' : tag" class="px-3 py-1 rounded-full border text-sm transition"
+          :class="activeTag === tag ? 'bg-gray-700 text-white border-gray-500' : 'border-gray-600 text-gray-300 hover:border-gray-400 hover:text-white'">
           {{ tag }}
         </button>
       </div>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-3">
-      <div v-for="image in filteredImages" :key="image.url" class="bg-gray-800 rounded-xl shadow overflow-hidden flex flex-col h-full">
-        <img :src="image.url" alt="Artwork" class="w-full h-auto block mx-auto">
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full">
+      <div v-for="image in filteredImages" :key="image.url" class="bg-gray-800 rounded-xl shadow flex flex-col h-full border border-gray-700">
+        <img :src="image.url" alt="Artwork" class="w-full h-auto block mx-auto rounded-t-xl">
         <div class="p-4 flex flex-col flex-1">
           <h3 class="text-lg font-semibold text-gray-100">{{ image.description }}</h3>
           <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
           <div class="flex-1"></div>
-          <span class="inline-block text-xs px-2 py-1 rounded-full bg-gray-700 text-gray-300 mt-2 self-start">
+          <span class="inline-block text-xs px-2 py-1 rounded-full bg-gray-900 text-gray-300 mt-2 self-start">
             {{ image.tag }}
           </span>
         </div>
