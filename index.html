@@ -8,30 +8,31 @@
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-gray-100 font-light">
+<body class="bg-gray-900 text-white font-light">
   <div id="app" class="p-6 max-w-4xl mx-auto">
-    <h1 class="text-4xl font-bold text-center mb-2 text-gray-100">Art by Jasper Calico</h1>
+    <h1 class="text-4xl font-bold text-center mb-2">Art by JasperCalico</h1>
     <p class="text-center mb-6 text-gray-400"></p>
 
-    <input v-model="search" type="text" placeholder="Search descriptions..." class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-500">
+    <input v-model="search" type="text" placeholder="Search descriptions..." class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 placeholder-gray-500">
 
     <div class="mb-4">
       <p class="text-sm text-gray-400 mb-1">Filter by tags:</p>
       <div class="flex flex-wrap gap-2">
         <button v-for="tag in uniqueTags" :key="tag" @click="activeTag = activeTag === tag ? '' : tag" class="px-3 py-1 rounded-full border text-sm"
-          :class="activeTag === tag ? 'bg-gray-700 text-white border-gray-400' : 'border-gray-600 text-gray-400 hover:border-white hover:text-white'">
+          :class="activeTag === tag ? 'bg-pink-500 text-white border-pink-500' : 'border-gray-500 text-gray-400 hover:border-white hover:text-white'">
           {{ tag }}
         </button>
       </div>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-2">
-      <div v-for="image in filteredImages" :key="image.url" class="bg-gray-800 rounded-xl shadow overflow-hidden">
+    <div class="grid gap-6 sm:grid-cols-3">
+      <div v-for="image in filteredImages" :key="image.url" class="bg-gray-800 rounded-xl shadow overflow-hidden flex flex-col h-full">
         <img :src="image.url" alt="Artwork" class="w-full h-auto block mx-auto">
-        <div class="p-4">
+        <div class="p-4 flex flex-col flex-1">
           <h3 class="text-lg font-semibold text-gray-100">{{ image.description }}</h3>
           <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
-          <span class="inline-block text-xs px-2 py-1 rounded-full bg-gray-700 text-gray-300">
+          <div class="flex-1"></div>
+          <span class="inline-block text-xs px-2 py-1 rounded-full bg-gray-700 text-gray-300 mt-2 self-start">
             {{ image.tag }}
           </span>
         </div>
