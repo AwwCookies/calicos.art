@@ -1,7 +1,6 @@
 # Feature Suggestions for calicos.art
 
 ## Web Gallery
-- **Tag click filtering:** Make tags on each card clickable to filter by that tag.
 - **Tag search/autocomplete:** Add a tag search box with autocomplete for easier navigation.
 - **Image lightbox:** Clicking an image opens a larger view with navigation.
 - **Download/Share buttons:** Allow users to download or copy a link to the image.

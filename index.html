@@ -36,26 +36,53 @@
     </div>
 
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full">
-      <div v-for="image in filteredImages" :key="image.url" class="bg-gray-800 rounded-xl shadow flex flex-col h-full border border-gray-700 overflow-hidden">
-        
-        <!-- Image Container w/ Spinner -->
+      <div v-for="image in filteredImages" :key="image.order || image.url || image.description" class="bg-gray-800 rounded-xl shadow flex flex-col h-full border border-gray-700 overflow-hidden">
+        <!-- Image Container w/ Spinner & Carousel -->
         <div class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden">
-          <img
-            v-show="!loadingImages.has(image.url)"
-            :src="image.url"
-            alt="Artwork"
-            class="w-full h-full object-cover transition-opacity duration-500"
-            @load="handleImageLoad(image.url)"
-            @error="handleImageError(image.url)"
-          >
-          <div v-show="loadingImages.has(image.url)" class="flex items-center justify-center w-full h-72 bg-gray-900 rounded-t-xl">
-            <svg class="animate-spin h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-            </svg>
-          </div>
+          <!-- Multi-image carousel -->
+          <template v-if="Array.isArray(image.urls) && image.urls.length > 0">
+            <button @click="prevImage(image)" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none" :aria-label="'Previous image'" v-if="image.urls.length > 1">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <img
+              v-show="!loadingImages.has(getCurrentImage(image))"
+              :src="getCurrentImage(image)"
+              alt="Artwork"
+              class="w-full h-full object-cover transition-opacity duration-500"
+              @load="handleImageLoad(getCurrentImage(image))"
+              @error="handleImageError(getCurrentImage(image))"
+            >
+            <div v-show="loadingImages.has(getCurrentImage(image))" class="flex items-center justify-center w-full h-72 bg-gray-900 rounded-t-xl">
+              <svg class="animate-spin h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+              </svg>
+            </div>
+            <button @click="nextImage(image)" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none" :aria-label="'Next image'" v-if="image.urls.length > 1">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+            <div class="absolute bottom-2 right-2 bg-gray-800 bg-opacity-80 text-xs text-gray-200 rounded px-2 py-1" v-if="image.urls.length > 1">
+              {{ getCurrentIndex(image) }} / {{ getImageCount(image) }}
+            </div>
+          </template>
+          <!-- Single image fallback -->
+          <template v-else>
+            <img
+              v-show="!loadingImages.has(image.url)"
+              :src="image.url"
+              alt="Artwork"
+              class="w-full h-full object-cover transition-opacity duration-500"
+              @load="handleImageLoad(image.url)"
+              @error="handleImageError(image.url)"
+            >
+            <div v-show="loadingImages.has(image.url)" class="flex items-center justify-center w-full h-72 bg-gray-900 rounded-t-xl">
+              <svg class="animate-spin h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+              </svg>
+            </div>
+          </template>
         </div>
-
         <!-- Card Info -->
         <div class="p-4 flex flex-col flex-1">
           <h3 class="text-lg font-semibold text-gray-100">{{ image.description }}</h3>
@@ -77,6 +104,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=1747629465"></script>
+  <script src="app.js?v=1747629929"></script>
 </body>
 </html>

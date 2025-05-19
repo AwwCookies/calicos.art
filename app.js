@@ -4,7 +4,9 @@ Vue.createApp({
       images: [],
       search: '',
       activeTag: '',
-      loadingImages: new Set()
+      loadingImages: new Set(),
+      // Track current image index for each multi-image card by order (or url as fallback)
+      imageIndexes: {}
     };
   },
   computed: {
@@ -44,6 +46,39 @@ Vue.createApp({
       const newSet = new Set(this.loadingImages);
       newSet.delete(url);
       this.loadingImages = newSet;
+    },
+    nextImage(img) {
+      if (!Array.isArray(img.urls) || img.urls.length < 2) return;
+      const key = String(img.order ?? img.url ?? img.description);
+      const cur = this.imageIndexes[key] || 0;
+      // Vue 3 reactivity: replace object to trigger update
+      this.imageIndexes = { ...this.imageIndexes, [key]: (cur + 1) % img.urls.length };
+    },
+    prevImage(img) {
+      if (!Array.isArray(img.urls) || img.urls.length < 2) return;
+      const key = String(img.order ?? img.url ?? img.description);
+      const cur = this.imageIndexes[key] || 0;
+      this.imageIndexes = { ...this.imageIndexes, [key]: (cur - 1 + img.urls.length) % img.urls.length };
+    },
+    getCurrentImage(img) {
+      // For multi-image, return current image URL; else return single url
+      if (Array.isArray(img.urls) && img.urls.length > 0) {
+        const key = String(img.order ?? img.url ?? img.description);
+        const idx = this.imageIndexes[key] || 0;
+        return img.urls[idx];
+      }
+      return img.url;
+    },
+    getImageCount(img) {
+      if (Array.isArray(img.urls)) return img.urls.length;
+      return 1;
+    },
+    getCurrentIndex(img) {
+      if (Array.isArray(img.urls)) {
+        const key = String(img.order ?? img.url ?? img.description);
+        return (this.imageIndexes[key] || 0) + 1;
+      }
+      return 1;
     }
   },
   mounted() {
@@ -57,8 +92,16 @@ Vue.createApp({
           }
           return new Date(b.createdAt) - new Date(a.createdAt);
         });
-        // Set loadingImages immediately so spinner shows as soon as possible
-        this.loadingImages = new Set(this.images.map(img => img.url));
+        // Set loadingImages for all images (single and multi)
+        let urls = [];
+        this.images.forEach(img => {
+          if (Array.isArray(img.urls)) {
+            urls.push(...img.urls);
+          } else if (img.url) {
+            urls.push(img.url);
+          }
+        });
+        this.loadingImages = new Set(urls);
         this.$forceUpdate();
       })
       .catch(err => console.error("Error loading data.json:", err));
