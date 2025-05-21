@@ -1,15 +1,5 @@
 [
   {
-    "url": "https://share.calicos.art/u/QLUWOF.png",
-    "description": "Gift art for Ashee",
-    "createdAt": "2025-05-18 00:00",
-    "tags": [
-      "ashe",
-      "digital"
-    ],
-    "order": 1
-  },
-  {
     "url": "https://share.calicos.art/u/fgYE7F.png",
     "description": "Temari",
     "createdAt": "2022-01-28 00:00",
@@ -17,7 +7,8 @@
       "cat",
       "digital"
     ],
-    "order": 2
+    "order": 1,
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\Temari-ref\\temari-ref.clip"
   },
   {
     "url": "https://share.calicos.art/u/dFsYpv.png",
@@ -27,7 +18,19 @@
       "jasper",
       "digital"
     ],
-    "order": 3
+    "order": 2,
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\trans-day\\trans-day-vis.clip"
+  },
+  {
+    "url": "https://share.calicos.art/u/QLUWOF.png",
+    "description": "Gift art for Ashee",
+    "createdAt": "2025-05-18 00:00",
+    "tags": [
+      "ashe",
+      "digital"
+    ],
+    "order": 3,
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\Ashe\\ashe-quad-gift.clip"
   },
   {
     "url": "https://share.calicos.art/u/xOxDjm.png",
@@ -49,7 +52,8 @@
       "meme",
       "gif"
     ],
-    "order": 5
+    "order": 5,
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\BLEEEEEEEHHH\\BLEEEEEEHHH.clip"
   },
   {
     "urls": [
@@ -63,6 +67,7 @@
     ],
     "description": "bread comic",
     "createdAt": "2025-05-19 16:54",
-    "order": 6
+    "order": 6,
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-sus\\jasper-sus-eating.clip"
   }
 ]
