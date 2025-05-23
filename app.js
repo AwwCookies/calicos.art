@@ -12,7 +12,7 @@ Vue.createApp({
   computed: {
     filteredImages() {
       return this.images.filter(img => {
-        const matchesSearch = img.description.toLowerCase().includes(this.search.toLowerCase());
+        const matchesSearch = (img.title && img.title.toLowerCase().includes(this.search.toLowerCase())) || img.description.toLowerCase().includes(this.search.toLowerCase());
         // Use tags array
         let tags = Array.isArray(img.tags) ? img.tags : [];
         const matchesTag = this.activeTag ? tags.includes(this.activeTag) : true;
