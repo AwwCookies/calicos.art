@@ -43,6 +43,7 @@
     ],
     "description": "bread comic",
     "createdAt": "2025-05-23 02:00",
-    "order": 4
+    "order": 4,
+    "title": "bread comic"
   }
 ]

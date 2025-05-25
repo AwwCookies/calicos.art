@@ -76,6 +76,21 @@ Vue.createApp({
         return (this.imageIndexes[key] || 0) + 1;
       }
       return 1;
+    },
+    getCardStyle(img) {
+      // Combine multiple unique properties for better uniqueness
+      let str = String(img.order ?? '') + '|' + (img.url ?? '') + '|' + (img.description ?? '');
+      // FNV-1a hash for better distribution
+      let hash = 2166136261;
+      for (let i = 0; i < str.length; i++) {
+        hash ^= str.charCodeAt(i);
+        hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+      }
+      // Only left or right, 2-4 degrees
+      let sign = (hash & 1) === 0 ? 1 : -1; // even: right, odd: left
+      let deg = 2 + (Math.abs(hash) % 3); // 2, 3, or 4
+      deg = deg * sign;
+      return { transform: `rotate(${deg}deg)` };
     }
   },
   mounted() {

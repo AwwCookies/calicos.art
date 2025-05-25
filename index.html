@@ -17,6 +17,59 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <style>
+    body {
+      /* Catppuccin Mocha dark theme: base #1e1e2e, mantle #181825, surface0 #313244, surface1 #45475a, text #cdd6f4 */
+      background: linear-gradient(135deg, #181825 0%, #1e1e2e 60%, #313244 100%);
+      color: #cdd6f4;
+    }
+    h1, h3 {
+      color: #f5e0dc;
+      font-family: 'Indie Flower', cursive;
+    }
+    .card-whimsical {
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 24px rgba(49,50,68,0.18);
+      background: #1e1e2e;
+      border: 2px dashed #45475a;
+      transform: rotate(-2deg);
+      transition: transform 0.2s;
+      position: relative;
+    }
+    .card-whimsical:hover {
+      transform: rotate(1deg) scale(1.03);
+      box-shadow: 0 12px 32px rgba(49,50,68,0.28);
+    }
+    .img-polaroid {
+      border: 6px solid #313244;
+      border-radius: 1rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-bottom: 0.5rem;
+      background: #181825;
+    }
+    .tag-whimsical {
+      background: #313244;
+      color: #f5e0dc;
+      border: 1px dashed #f38ba8;
+      font-family: 'Indie Flower', cursive;
+      transition: transform 0.1s;
+    }
+    .tag-whimsical:hover {
+      transform: rotate(-5deg) scale(1.1);
+      background: #45475a;
+      color: #f38ba8;
+    }
+    input[type="text"] {
+      background: #181825;
+      color: #cdd6f4;
+      border: 1px solid #313244;
+    }
+    input[type="text"]:focus {
+      border-color: #f38ba8;
+      box-shadow: 0 0 0 2px #f38ba833;
+    }
+  </style>
 </head>
 <body class="bg-gray-900 text-gray-200 font-light">
   <div id="app" class="p-6 max-w-6xl mx-auto">
@@ -36,7 +89,9 @@
     </div>
 
     <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full">
-      <div v-for="image in filteredImages" :key="image.order || image.url || image.description" class="bg-gray-800 rounded-xl shadow flex flex-col h-full border border-gray-700 overflow-hidden">
+      <div v-for="image in filteredImages" :key="image.order || image.url || image.description"
+        class="bg-gray-800 rounded-xl shadow flex flex-col h-full border border-gray-700 overflow-hidden card-whimsical"
+        :style="getCardStyle(image)">
         <!-- Image Container w/ Spinner & Carousel -->
         <div class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden">
           <!-- Multi-image carousel -->
@@ -93,7 +148,7 @@
             <button v-for="tag in image.tags"
                   :key="tag"
                   @click="activeTag = activeTag === tag ? '' : tag"
-                  class="inline-block text-xs px-2 py-1 rounded-full border border-gray-700 mr-1 mb-1 focus:outline-none transition cursor-pointer"
+                  class="inline-block text-xs px-2 py-1 rounded-full border border-gray-700 mr-1 mb-1 focus:outline-none transition cursor-pointer tag-whimsical"
                   :class="activeTag === tag ? 'bg-gray-700 text-white border-gray-500' : 'bg-gray-900 text-gray-300 hover:border-gray-400 hover:text-white'"
                   type="button"
                   :aria-pressed="activeTag === tag">
@@ -105,6 +160,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=1747980062"></script>
+  <script src="app.js?v=1748143617"></script>
 </body>
 </html>
