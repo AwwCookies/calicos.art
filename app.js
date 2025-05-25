@@ -5,25 +5,24 @@ Vue.createApp({
       search: '',
       activeTag: '',
       loadingImages: new Set(),
-      // Track current image index for each multi-image card by order (or url as fallback)
-      imageIndexes: {}
+      imageIndexes: {},
+      dominantColors: {},
+      tiltDegrees: {}
     };
   },
   computed: {
     filteredImages() {
       return this.images.filter(img => {
-        const matchesSearch = img.description.toLowerCase().includes(this.search.toLowerCase());
-        // Use tags array
-        let tags = Array.isArray(img.tags) ? img.tags : [];
+        const matchesSearch = (img.description || '').toLowerCase().includes(this.search.toLowerCase());
+        const tags = Array.isArray(img.tags) ? img.tags : [];
         const matchesTag = this.activeTag ? tags.includes(this.activeTag) : true;
         return matchesSearch && matchesTag;
       });
     },
     uniqueTags() {
-      // Collect all tags from all images, flatten, dedupe
       const tagSet = new Set();
       this.images.forEach(img => {
-        let tags = Array.isArray(img.tags) ? img.tags : [];
+        const tags = Array.isArray(img.tags) ? img.tags : [];
         tags.forEach(t => tagSet.add(t));
       });
       return [...tagSet];
@@ -34,70 +33,107 @@ Vue.createApp({
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(dateStr).toLocaleDateString(undefined, options);
     },
+    getCurrentImage(image) {
+      if (Array.isArray(image.urls) && image.urls.length > 0) {
+        const idx = this.imageIndexes[image.order || image.url || image.description] || 0;
+        return image.urls[idx] || image.urls[0];
+      }
+      return image.url;
+    },
+    getImageCount(image) {
+      return Array.isArray(image.urls) ? image.urls.length : 1;
+    },
+    getCurrentIndex(image) {
+      if (Array.isArray(image.urls)) {
+        return (this.imageIndexes[image.order || image.url || image.description] || 0) + 1;
+      }
+      return 1;
+    },
+    prevImage(image) {
+      if (!Array.isArray(image.urls)) return;
+      const key = image.order || image.url || image.description;
+      let idx = this.imageIndexes[key] || 0;
+      idx = (idx - 1 + image.urls.length) % image.urls.length;
+      this.$set(this.imageIndexes, key, idx);
+    },
+    nextImage(image) {
+      if (!Array.isArray(image.urls)) return;
+      const key = image.order || image.url || image.description;
+      let idx = this.imageIndexes[key] || 0;
+      idx = (idx + 1) % image.urls.length;
+      this.$set(this.imageIndexes, key, idx);
+    },
     handleImageLoad(url) {
-      const newSet = new Set(this.loadingImages);
-      newSet.delete(url);
-      this.loadingImages = newSet;
+      this.loadingImages.delete(url);
+      const img = document.querySelector(`img[src="${url}"]`);
+      if (img && window.ColorThief) {
+        try {
+          const color = new window.ColorThief().getColor(img);
+          this.dominantColors[url] = color;
+        } catch (e) {}
+      }
     },
     handleImageError(url) {
-      const newSet = new Set(this.loadingImages);
-      newSet.delete(url);
-      this.loadingImages = newSet;
+      this.loadingImages.delete(url);
     },
-    nextImage(img) {
-      if (!Array.isArray(img.urls) || img.urls.length < 2) return;
-      const key = String(img.order ?? img.url ?? img.description);
-      const cur = this.imageIndexes[key] || 0;
-      // Vue 3 reactivity: replace object to trigger update
-      this.imageIndexes = { ...this.imageIndexes, [key]: (cur + 1) % img.urls.length };
+    getCardStyle(image) {
+      const key = image.order || image.url || image.description;
+      const deg = this.tiltDegrees[key] || 0;
+      return {
+        transform: `rotate(${deg}deg) scale(1)`,
+        transition: 'transform 0.3s ease'
+      };
     },
-    prevImage(img) {
-      if (!Array.isArray(img.urls) || img.urls.length < 2) return;
-      const key = String(img.order ?? img.url ?? img.description);
-      const cur = this.imageIndexes[key] || 0;
-      this.imageIndexes = { ...this.imageIndexes, [key]: (cur - 1 + img.urls.length) % img.urls.length };
+    getCatFilter(image) {
+      const url = this.getCurrentImage(image);
+      const color = this.dominantColors[url] || [128, 128, 128];
+      const opp = color.map(c => 255 - c);
+      return `brightness(0) saturate(100%) invert(100%) sepia(100%) hue-rotate(${Math.round((opp[0] - opp[2]) * 1.5)}deg) brightness(1.2) saturate(2)`;
     },
-    getCurrentImage(img) {
-      // For multi-image, return current image URL; else return single url
-      if (Array.isArray(img.urls) && img.urls.length > 0) {
-        const key = String(img.order ?? img.url ?? img.description);
-        const idx = this.imageIndexes[key] || 0;
-        return img.urls[idx];
+    getTagStyle(tag) {
+      const pastelColors = ["#f5e0dc", "#f9e2af", "#a6e3a1", "#94e2d5", "#89b4fa", "#cba6f7", "#f38ba8"];
+      const color = pastelColors[Math.abs(this.hashString(tag)) % pastelColors.length];
+      const isActive = this.activeTag === tag;
+
+      return {
+        backgroundColor: isActive ? `${color}33` : `${color}22`, // Darker when active
+        borderColor: color,
+        color: color,
+      };
+    },
+    hashString(str) {
+      // Simple hash function to generate consistent values for the same string
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
       }
-      return img.url;
+      return hash;
     },
-    getImageCount(img) {
-      if (Array.isArray(img.urls)) return img.urls.length;
-      return 1;
-    },
-    getCurrentIndex(img) {
-      if (Array.isArray(img.urls)) {
-        const key = String(img.order ?? img.url ?? img.description);
-        return (this.imageIndexes[key] || 0) + 1;
-      }
-      return 1;
-    }
   },
   mounted() {
     fetch("data.json")
       .then(res => res.json())
       .then(data => {
-        // Sort by 'order' if present, otherwise by date
         this.images = data.sort((a, b) => {
           if (a.order !== undefined && b.order !== undefined) {
             return a.order - b.order;
           }
           return new Date(b.createdAt) - new Date(a.createdAt);
         });
-        // Set loadingImages for all images (single and multi)
-        let urls = [];
+
+        const urls = [];
         this.images.forEach(img => {
+          const key = img.order || img.url || img.description;
+          const tilt = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * 3); // ±2–6°
+          this.tiltDegrees[key] = tilt.toFixed(2);
+
           if (Array.isArray(img.urls)) {
             urls.push(...img.urls);
           } else if (img.url) {
             urls.push(img.url);
           }
         });
+
         this.loadingImages = new Set(urls);
         this.$forceUpdate();
       })

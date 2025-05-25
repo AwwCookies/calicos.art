@@ -1,32 +1,78 @@
 [
   {
-    "url": "https://share.calicos.art/u/wLSWpX.png",
+    "url": "https://share.calicos.art/u/u5EAVd.png",
     "tags": [
-      "clipstudio"
+      "digital",
+      "illustration",
+      "clipstudio",
+      "black and white",
+      "cute",
+      "pastel",
+      "kawaii",
+      "cat",
+      "character",
+      "playful"
     ],
-    "description": "ashe-quad-gift.clip",
-    "createdAt": "2025-05-20 16:59",
-    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\Ashe\\ashe-quad-gift.clip",
+    "title": "cat-stamp-tux",
+    "description": "cat-stamp-tux.clip",
+    "createdAt": "2025-05-25 02:04",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\tsukihama-stamps\\cat-stamp-tux.clip",
     "order": 1
   },
   {
-    "url": "https://share.calicos.art/u/FHWlID.png",
+    "url": "https://share.calicos.art/u/2soqTl.png",
     "tags": [
-      "clipstudio"
+      "digital",
+      "clipstudio",
+      "cheerful",
+      "strawberry",
+      "cute",
+      "pastel",
+      "cat",
+      "character"
     ],
+    "title": "ashe-quad-gift",
+    "description": "ashe-quad-gift.clip",
+    "createdAt": "2025-05-20 16:59",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\Ashe\\ashe-quad-gift.clip",
+    "order": 2
+  },
+  {
+    "url": "https://share.calicos.art/u/NTbZSB.png",
+    "tags": [
+      "tabby",
+      "clipstudio",
+      "cute",
+      "cartoon",
+      "digital art",
+      "orange",
+      "playful",
+      "cat",
+      "character design"
+    ],
+    "title": "temari-ref",
     "description": "temari-ref.clip",
     "createdAt": "2025-05-14 18:36",
     "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\Temari-ref\\temari-ref.clip",
     "order": 3
   },
   {
-    "url": "https://share.calicos.art/u/MiQM4Z.png",
+    "url": "https://share.calicos.art/u/pehFvZ.png",
     "tags": [
-      "clipstudio"
+      "whimsical",
+      "colorful",
+      "illustration",
+      "fantasy",
+      "clipstudio",
+      "night sky",
+      "cat",
+      "digital art",
+      "cute"
     ],
-    "description": "cat-stamp-tux.clip",
-    "createdAt": "2025-05-14 20:58",
-    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\tsukihama-stamps\\cat-stamp-tux.clip",
-    "order": 3
+    "title": "my-favorite-star",
+    "description": "my-favorite-star.clip",
+    "createdAt": "2025-05-02 19:41",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-and-solstice\\my-favorite-star.clip",
+    "order": 4
   }
 ]
