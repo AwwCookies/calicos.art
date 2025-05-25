@@ -74,5 +74,60 @@
     "createdAt": "2025-05-02 19:41",
     "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-and-solstice\\my-favorite-star.clip",
     "order": 4
+  },
+  {
+    "url": "https://share.calicos.art/u/wbvFA8.png",
+    "tags": [
+      "clipstudio"
+    ],
+    "title": "jasper-sparkle-on",
+    "description": "jasper-sparkle-on.clip",
+    "createdAt": "2025-05-07 19:28",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-sparkle-on\\jasper-sparkle-on.clip",
+    "order": 5
+  },
+  {
+    "url": "https://share.calicos.art/u/q7AYx4.png",
+    "tags": [
+      "clipstudio"
+    ],
+    "title": "star-gazing",
+    "description": "star-gazing.clip",
+    "createdAt": "2025-04-25 20:55",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-and-solstice\\star-gazing.clip",
+    "order": 6
+  },
+  {
+    "url": "https://share.calicos.art/u/Ix0iDp.png",
+    "tags": [
+      "clipstudio"
+    ],
+    "title": "trans-day-vis",
+    "description": "trans-day-vis.clip",
+    "createdAt": "2025-03-31 19:00",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\trans-day\\trans-day-vis.clip",
+    "order": 7
+  },
+  {
+    "url": "https://share.calicos.art/u/G7O2D7.png",
+    "tags": [
+      "clipstudio"
+    ],
+    "title": "floor",
+    "description": "floor.clip",
+    "createdAt": "2025-03-16 00:38",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-flood-meme\\floor.clip",
+    "order": 8
+  },
+  {
+    "url": "https://share.calicos.art/u/DBYeHR.png",
+    "tags": [
+      "clipstudio"
+    ],
+    "title": "jasper-valentines",
+    "description": "jasper-valentines.clip",
+    "createdAt": "2025-02-06 01:30",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-valentines\\jasper-valentines.clip",
+    "order": 9
   }
 ]
