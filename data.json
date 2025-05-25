@@ -129,5 +129,16 @@
     "createdAt": "2025-02-06 01:30",
     "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\jasper-valentines\\jasper-valentines.clip",
     "order": 9
+  },
+  {
+    "url": "https://share.calicos.art/u/TnZfNK.png",
+    "tags": [
+      "clipstudio"
+    ],
+    "title": "dango",
+    "description": "dango.clip",
+    "createdAt": "2025-05-25 19:37",
+    "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\dango\\dango.clip",
+    "order": 10
   }
 ]

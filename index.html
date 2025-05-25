@@ -14,6 +14,41 @@
   <meta name="twitter:title" content="Art Folio by Jasper Calico" />
   <meta name="twitter:description" content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations." />
   <meta name="twitter:image" content="https://calicos.art/og-image.png" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Jasper Calico" />
+  <meta name="keywords" content="Jasper Calico, digital art, cat illustrations, memes, art portfolio, personal works, whimsical art" />
+  <link rel="canonical" href="https://calicos.art/" />
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Art Folio by Jasper Calico",
+    "url": "https://calicos.art/",
+    "description": "A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations.",
+    "author": {
+      "@type": "Person",
+      "name": "Jasper Calico"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://calicos.art/?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Jasper Calico",
+    "url": "https://calicos.art/",
+    "sameAs": [
+      "https://instagram.com/jasper.calico",
+    ]
+  }
+  </script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <script src="https://unpkg.com/colorthief/dist/color-thief.umd.js"></script>
@@ -187,7 +222,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=1748196991"></script>
+  <script src="app.js?v=1748217116"></script>
   <script>
     // Blurred pastel stars background
     document.addEventListener("DOMContentLoaded", function() {
