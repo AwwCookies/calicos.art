@@ -199,7 +199,7 @@
         <!-- Card Info -->
         <div class="p-4 flex flex-col flex-1 relative">
           <!-- Cat PNG in bottom right -->
-          <img v-if="!loadingImages.has(image.url)" class="cat-sticker" src="cat.png" :style="{ filter: getCatFilter(image) }" alt="cat sticker" />
+          <img v-if="!loadingImages.has(image.url)" class="cat-sticker" src="https://share.calicos.art/u/cd4AiD.png" :style="{ filter: getCatFilter(image) }" alt="cat sticker" />
           <h3 class="text-lg font-semibold text-gray-100 group-hover:text-pink-400 transition-colors">{{ image.title }}</h3>
           <p class="text-sm text-gray-400 mb-2">{{ image.description }}</p>
           <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
@@ -222,7 +222,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=1748217116"></script>
+  <script src="app.js?v=1748221821"></script>
   <script>
     // Blurred pastel stars background
     document.addEventListener("DOMContentLoaded", function() {
