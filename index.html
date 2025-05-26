@@ -1,251 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Art Folio</title>
-  <meta name="description" content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations." />
-  <meta property="og:title" content="Art Folio by Jasper Calico" />
-  <meta property="og:description" content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://calicos.art/" />
-  <meta property="og:image" content="https://calicos.art/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Art Folio by Jasper Calico" />
-  <meta name="twitter:description" content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations." />
-  <meta name="twitter:image" content="https://calicos.art/og-image.png" />
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="Jasper Calico" />
-  <meta name="keywords" content="Jasper Calico, digital art, cat illustrations, memes, art portfolio, personal works, whimsical art" />
-  <link rel="canonical" href="https://calicos.art/" />
-  
-  <!-- Structured Data for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Art Folio by Jasper Calico",
-    "url": "https://calicos.art/",
-    "description": "A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations.",
-    "author": {
-      "@type": "Person",
-      "name": "Jasper Calico"
-    },
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://calicos.art/?search={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Jasper Calico",
-    "url": "https://calicos.art/",
-    "sameAs": [
-      "https://instagram.com/jasper.calico",
-    ]
-  }
-  </script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-  <script src="https://unpkg.com/colorthief/dist/color-thief.umd.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(135deg, #1e1e2e 0%, #313244 60%, #45475a 100%);
-      min-height: 100vh;
-      font-family: 'Quicksand', 'Segoe UI', Arial, sans-serif;
-    }
-    #bg-stars {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .star {
-      position: absolute;
-      border-radius: 9999px;
-      filter: blur(8px);
-      opacity: 0.8;
-      animation: sparkleMove 12s linear infinite, sparkleOpacity 5s ease-in-out infinite;
-    }
-    @keyframes sparkleMove {
-      0% { transform: translateY(0) rotate(0deg);}
-      100% { transform: translateY(-50vh) rotate(45deg);}
-    }
-    @keyframes sparkleOpacity {
-      0%, 100% { opacity: 0.6;}
-      50% { opacity: 1;}
-    }
-    .glass-card {
-      background: rgba(30, 30, 46, 0.6); /* Semi-transparent dark background */
-      -webkit-backdrop-filter: blur(10px); /* Frosted glass blur effect for Safari */
-      backdrop-filter: blur(10px); /* Frosted glass blur effect */
-      border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for glass effect */
-      border-radius: 1rem; /* Rounded corners */
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art Folio</title>
+    <meta
+      name="description"
+      content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations."
+    />
+    <meta property="og:title" content="Art Folio by Jasper Calico" />
+    <meta
+      property="og:description"
+      content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://calicos.art/" />
+    <meta property="og:image" content="https://calicos.art/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Art Folio by Jasper Calico" />
+    <meta
+      name="twitter:description"
+      content="A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations."
+    />
+    <meta name="twitter:image" content="https://calicos.art/og-image.png" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Jasper Calico" />
+    <meta
+      name="keywords"
+      content="Jasper Calico, digital art, cat illustrations, memes, art portfolio, personal works, whimsical art"
+    />
+    <link rel="canonical" href="https://calicos.art/" />
 
-    .glass-card:hover {
-      transform: scale(1.02); /* Slight zoom on hover */
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-    }
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Art Folio by Jasper Calico",
+        "url": "https://calicos.art/",
+        "description": "A curated collection of personal works by Jasper Calico. View digital art, memes, and cat illustrations.",
+        "author": {
+          "@type": "Person",
+          "name": "Jasper Calico"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://calicos.art/?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jasper Calico",
+        "url": "https://calicos.art/",
+        "sameAs": ["https://instagram.com/jasper.calico"]
+      }
+    </script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/colorthief/dist/color-thief.umd.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #1e1e2e 0%,
+          #313244 60%,
+          #45475a 100%
+        );
+        min-height: 100vh;
+        font-family: "Quicksand", "Segoe UI", Arial, sans-serif;
+      }
+      #bg-stars {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .star {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(2px);
+        opacity: 0.4;
+        animation: sparkleMove 12s linear infinite,
+          sparkleOpacity 5s ease-in-out infinite;
+      }
+      @keyframes sparkleMove {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-50vh) rotate(45deg);
+        }
+      }
+      @keyframes sparkleOpacity {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .glass-card {
+        background: rgba(
+          30,
+          30,
+          46,
+          0.6
+        ); /* Semi-transparent dark background */
+        -webkit-backdrop-filter: blur(
+          10px
+        ); /* Frosted glass blur effect for Safari */
+        backdrop-filter: blur(10px); /* Frosted glass blur effect */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for glass effect */
+        border-radius: 1rem; /* Rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-    .group:hover h3 {
-      color: #f38ba8; /* Pastel pink */
-    }
+      .glass-card:hover {
+        transform: scale(1.02); /* Slight zoom on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+      }
 
-    .cat-sticker {
-      position: absolute;
-      bottom: 12px;
-      right: 12px;
-      width: 40px;
-      height: 40px;
-      opacity: 0.85;
-      pointer-events: none;
-      z-index: 2;
-      transition: transform 0.3s ease;
-    }
+      .group:hover h3 {
+        color: #f38ba8; /* Pastel pink */
+      }
 
-    .group:hover .cat-sticker {
-      transform: scale(1.1);
-    }
+      .cat-sticker {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        opacity: 0.85;
+        pointer-events: none;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
 
-    .tag-whimsical {
-      border-style: dashed;
-      border-width: 2px;
-      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    }
+      .group:hover .cat-sticker {
+        transform: scale(1.1);
+      }
 
-    .tag-whimsical:hover {
-      transform: scale(1.1); /* Slight zoom on hover */
-      background-color: rgba(255, 255, 255, 0); /* Slightly brighter background */
-    }
+      .tag-whimsical {
+        border-style: dashed;
+        border-width: 2px;
+        transition: transform 0.2s ease, background-color 0.2s ease,
+          color 0.2s ease;
+      }
 
-    .tag-whimsical[aria-pressed="true"] {
-      transform: scale(1.15); /* Slight zoom for active tag */
-      background-color: rgba(255, 255, 255, 0.2); /* Darker background for clicked state */
-      border-color: rgba(255, 255, 255, 0.5); /* Slightly brighter border */
-    }
-  </style>
-</head>
-<body class="text-gray-200 font-light">
-  <!-- Blurred pastel stars background -->
-  <div id="bg-stars"></div>
+      .tag-whimsical:hover {
+        transform: scale(1.1); /* Slight zoom on hover */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0
+        ); /* Slightly brighter background */
+      }
 
-  <div id="app" class="p-6 max-w-6xl mx-auto">
-    <h1 class="text-4xl font-bold text-center mb-2 text-gray-100">Art by Jasper Calico</h1>
-    <p class="text-center mb-6 text-gray-400"></p>
+      .tag-whimsical[aria-pressed="true"] {
+        transform: scale(1.15); /* Slight zoom for active tag */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.2
+        ); /* Darker background for clicked state */
+        border-color: rgba(255, 255, 255, 0.5); /* Slightly brighter border */
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
+        scrollbar-width: none; /* Firefox */
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+      }
+    </style>
+  </head>
+  <body class="text-gray-200 font-light">
+    <!-- Blurred pastel stars background -->
+    <div id="bg-stars"></div>
 
-    <input v-model="search" type="text" placeholder="Search my doodles..." class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition">
+    <div id="app">
+      <div class="p-6 max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-2 text-gray-100">
+          Art by Jasper Calico
+        </h1>
+        <p class="text-center mb-6 text-gray-400"></p>
 
-    <div class="mb-4">
-      <p class="text-sm text-gray-400 mb-1">Filter by tags:</p>
-      <div class="flex flex-wrap gap-2">
-        <button v-for="tag in uniqueTags" :key="tag" @click="activeTag = activeTag === tag ? '' : tag" class="px-3 py-1 rounded-full border text-sm transition"
-          :class="activeTag === tag ? 'bg-gray-700 text-white border-gray-500' : 'border-gray-600 text-gray-300 hover:border-gray-400 hover:text-white'">
-          {{ tag }}
-        </button>
-      </div>
-    </div>
+        <input
+          v-model="search"
+          type="text"
+          placeholder="Search my doodles..."
+          class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition"
+        />
 
-    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full">
-      <div
-        v-for="image in filteredImages"
-        :key="image.order || image.url || image.description"
-        class="glass-card shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full border border-gray-700 overflow-hidden relative group"
-        :style="getCardStyle(image)"
-      >
-        <!-- Image Container -->
-        <div class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden" style="min-height: 320px;">
-          <template v-if="Array.isArray(image.urls) && image.urls.length > 0">
-            <button @click="prevImage(image)" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none" :aria-label="'Previous image'" v-if="image.urls.length > 1">
-              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <img
-              v-show="!loadingImages.has(getCurrentImage(image))"
-              :src="getCurrentImage(image)"
-              crossorigin="anonymous"
-              alt="Artwork"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              @load="handleImageLoad(getCurrentImage(image))"
-              @error="handleImageError(getCurrentImage(image))"
-            >
-            <button @click="nextImage(image)" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none" :aria-label="'Next image'" v-if="image.urls.length > 1">
-              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-            </button>
-          </template>
-          <template v-else>
-            <img
-              v-show="!loadingImages.has(image.url)"
-              :src="image.url"
-              crossorigin="anonymous"
-              alt="Artwork"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              @load="handleImageLoad(image.url)"
-              @error="handleImageError(image.url)"
-            >
-          </template>
-        </div>
-
-        <!-- Card Info -->
-        <div class="p-4 flex flex-col flex-1 relative">
-          <!-- Cat PNG in bottom right -->
-          <img v-if="!loadingImages.has(image.url)" class="cat-sticker" src="https://share.calicos.art/u/cd4AiD.png" :style="{ filter: getCatFilter(image) }" alt="cat sticker" />
-          <h3 class="text-lg font-semibold text-gray-100 group-hover:text-pink-400 transition-colors">{{ image.title }}</h3>
-          <p class="text-sm text-gray-400 mb-2">{{ image.description }}</p>
-          <p class="text-sm text-gray-400 mb-2">{{ formatDate(image.createdAt) }}</p>
-          <div class="flex-1"></div>
-          <div class="flex flex-wrap gap-2 mt-2">
+        <div class="mb-4">
+          <p class="text-sm text-gray-400 mb-1">Filter by tags:</p>
+          <div class="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
             <button
-              v-for="tag in image.tags"
+              v-for="tag in uniqueTags"
               :key="tag"
               @click="activeTag = activeTag === tag ? '' : tag"
-              class="inline-block text-xs px-2 py-1 rounded-full border mr-1 mb-1 focus:outline-none transition cursor-pointer tag-whimsical"
-              :style="getTagStyle(tag)"
-              type="button"
-              :aria-pressed="activeTag === tag"
+              class="px-3 py-1 rounded-full border text-sm transition"
+              :class="activeTag === tag ? 'bg-gray-700 text-white border-gray-500' : 'border-gray-600 text-gray-300 hover:border-gray-400 hover:text-white'"
             >
               {{ tag }}
             </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script src="app.js?v=1748221821"></script>
-  <script>
-    // Blurred pastel stars background
-    document.addEventListener("DOMContentLoaded", function() {
-      const container = document.querySelector("#bg-stars");
-      const colors = ["#f5e0dc", "#b4befe", "#f9e2af"]; // pastel pink, blue, yellow
-      const count = 40;
-      for (let i = 0; i < count; i++) {
-        const star = document.createElement("div");
-        star.classList.add("star");
-        const size = Math.random() * 2 + 2;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const top = Math.random() * 100;
-        const left = Math.random() * 100;
-        const duration = Math.random() * 10 + 10;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.backgroundColor = color;
-        star.style.top = `${top}vh`;
-        star.style.left = `${left}vw`;
-        star.style.animationDuration = `${duration}s`;
-        container.appendChild(star);
-      }
-    });
-  </script>
-</body>
+      <div
+        class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 p-4 mx-6"
+      >
+        <div
+          v-for="image in filteredImages"
+          :key="image.order || image.url || image.description"
+          class="glass-card shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full border border-gray-700 overflow-hidden relative group"
+          :style="getCardStyle(image)"
+        >
+          <!-- Image Container -->
+          <template v-if="Array.isArray(image.urls) && image.urls.length > 0">
+            <div
+              class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden"
+              style="min-height: 320px"
+            >
+              <button
+                @click="prevImage(image)"
+                class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none"
+                :aria-label="'Previous image'"
+                v-if="image.urls.length > 1"
+              >
+                <svg
+                  class="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <img
+                v-show="!loadingImages.has(getCurrentImage(image))"
+                :src="getCurrentImage(image)"
+                crossorigin="anonymous"
+                alt="Artwork"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                @load="handleImageLoad(getCurrentImage(image))"
+                @error="handleImageError(getCurrentImage(image))"
+              />
+              <button
+                @click="nextImage(image)"
+                class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none"
+                :aria-label="'Next image'"
+                v-if="image.urls.length > 1"
+              >
+                <svg
+                  class="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </template>
+          <template v-else>
+            <div
+              class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden"
+              style="min-height: 320px"
+            >
+              <img
+                v-show="!loadingImages.has(image.url)"
+                :src="image.url"
+                crossorigin="anonymous"
+                alt="Artwork"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                @load="handleImageLoad(image.url)"
+                @error="handleImageError(image.url)"
+              />
+            </div>
+          </template>
+          <!-- Title -->
+          <div class="p-4">
+            <h3
+              class="text-lg font-semibold text-gray-100 group-hover:text-pink-400 transition-colors text-center"
+            >
+              {{ getTitleWithExtension(image) }}
+            </h3>
+            <div class="gird gap-2 text-center">
+              <button
+                v-for="tag in image.tags"
+                :key="tag"
+                @click="activeTag = activeTag === tag ? '' : tag"
+                class="inline-block text-xs px-2 py-1 rounded-full border mr-1 mb-1 focus:outline-none transition cursor-pointer tag-whimsical"
+                :style="getTagStyle(tag)"
+                type="button"
+                :aria-pressed="activeTag === tag"
+              >
+                {{ tag }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lightbox for image preview -->
+      <div
+        v-if="lightboxImage"
+        class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+      >
+        <div
+          class="relative bg-gray-900 rounded-lg p-6 max-w-2xl w-full shadow-lg"
+        >
+          <!-- Close Button -->
+          <button
+            @click="closeLightbox"
+            class="absolute top-4 right-4 text-gray-400 hover:text-white transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          <!-- Image -->
+          <div class="mb-4">
+            <img
+              :src="getCurrentImage(lightboxImage)"
+              alt="Artwork"
+              class="w-full h-auto rounded-lg shadow-md"
+            />
+          </div>
+
+          <!-- Title and Description -->
+          <div class="text-center">
+            <h2 class="text-xl font-bold text-gray-100 mb-2">
+              {{ lightboxImage.title }}
+            </h2>
+            <p class="text-gray-300 mb-4">{{ lightboxImage.description }}</p>
+            <p class="text-gray-400 text-sm">
+              {{ formatDate(lightboxImage.createdAt) }}
+            </p>
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2 justify-center mt-4">
+            <span
+              v-for="tag in lightboxImage.tags"
+              :key="tag"
+              class="inline-block text-xs px-3 py-1 rounded-full border focus:outline-none transition cursor-pointer tag-whimsical"
+              :style="getTagStyle(tag)"
+            >
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js?v=1748226252"></script>
+    <script>
+      // Blurred pastel stars background
+      document.addEventListener("DOMContentLoaded", function () {
+        const container = document.querySelector("#bg-stars");
+        const colors = ["#f5e0dc", "#b4befe", "#f9e2af"]; // pastel pink, blue, yellow
+        const count = 40;
+        for (let i = 0; i < count; i++) {
+          const star = document.createElement("div");
+          star.classList.add("star");
+          const size = Math.random() * 2 + 2;
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const top = Math.random() * 100;
+          const left = Math.random() * 100;
+          const duration = Math.random() * 10 + 10;
+          star.style.width = `${size}px`;
+          star.style.height = `${size}px`;
+          star.style.backgroundColor = color;
+          star.style.top = `${top}vh`;
+          star.style.left = `${left}vw`;
+          star.style.animationDuration = `${duration}s`;
+          container.appendChild(star);
+        }
+      });
+    </script>
+  </body>
 </html>
