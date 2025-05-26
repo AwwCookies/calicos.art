@@ -63,14 +63,14 @@ Vue.createApp({
       const key = image.order || image.url || image.description;
       let idx = this.imageIndexes[key] || 0;
       idx = (idx - 1 + image.urls.length) % image.urls.length;
-      this.$set(this.imageIndexes, key, idx);
+      this.imageIndexes = { ...this.imageIndexes, [key]: idx }; // Update reactively
     },
     nextImage(image) {
       if (!Array.isArray(image.urls)) return;
       const key = image.order || image.url || image.description;
       let idx = this.imageIndexes[key] || 0;
       idx = (idx + 1) % image.urls.length;
-      this.$set(this.imageIndexes, key, idx);
+      this.imageIndexes = { ...this.imageIndexes, [key]: idx }; // Update reactively
     },
     handleImageLoad(url) {
       this.loadingImages.delete(url);
@@ -126,40 +126,47 @@ Vue.createApp({
     },
     getRandomImageExtension(image) {
       const imageExtensions = [
-        "jpg",
-        "jpeg",
-        "png",
-        "webp",
-        "bmp",
-        "tiff",
-        "tif",
-        "svg",
-        "heic",
-        "heif",
-        "apng",
-        "tga",
-        "ico",
-        "psd",
+        { ext: "jpg", weight: 30 },
+        { ext: "jpeg", weight: 30 },
+        { ext: "png", weight: 25 },
+        { ext: "webp", weight: 5 },
+        { ext: "bmp", weight: 3 },
+        { ext: "tiff", weight: 3 },
+        { ext: "tif", weight: 2 },
+        { ext: "svg", weight: 1 },
+        { ext: "heic", weight: 1 },
+        { ext: "heif", weight: 1 },
+        { ext: "apng", weight: 1 },
+        { ext: "tga", weight: 1 },
+        { ext: "ico", weight: 1 },
+        { ext: "psd", weight: 1 },
       ];
       const comicExtensions = [
-        "mp4",
-        "webm",
-        "mov",
-        "avi",
-        "mkv",
-        "flv",
-        "wmv",
-        "m4v",
-        "3gp",
-        "mpeg",
-        "mpg",
-        "gif",
+        { ext: "mp4", weight: 10 },
+        { ext: "webm", weight: 10 },
+        { ext: "mov", weight: 5 },
+        { ext: "avi", weight: 5 },
+        { ext: "mkv", weight: 5 },
+        { ext: "flv", weight: 5 },
+        { ext: "wmv", weight: 5 },
+        { ext: "m4v", weight: 5 },
+        { ext: "3gp", weight: 5 },
+        { ext: "mpeg", weight: 5 },
+        { ext: "mpg", weight: 5 },
+        { ext: "gif", weight: 10 },
       ];
+
       const extensions = this.isComicImage(image)
         ? comicExtensions
         : imageExtensions;
+
+      // Create a weighted list
+      const weightedExtensions = extensions.flatMap(({ ext, weight }) =>
+        Array(weight).fill(ext)
+      );
+
       const hash = this.hashString(image.title || image.description || "image");
-      return extensions[Math.abs(hash) % extensions.length];
+      return weightedExtensions[Math.abs(hash) % weightedExtensions.length];
     },
     getTitleWithExtension(image) {
       let title = image.title || image.description || "image";

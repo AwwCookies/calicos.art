@@ -191,6 +191,18 @@
       .scrollbar-hide::-webkit-scrollbar {
         display: none; /* Chrome, Safari, and Opera */
       }
+      .temari-hang {
+        position: absolute;
+        top: 28px; /* Adjust for how much she “hangs” */
+        right: 20px; /* Or left, depending on where you want her */
+        z-index: 10;
+        pointer-events: none; /* So it doesn’t block the search bar */
+      }
+
+      .temari-hang img {
+        height: 60px; /* Resize as needed */
+        transform: rotate(5deg); /* Optional little wobble for life */
+      }
     </style>
   </head>
   <body class="text-gray-200 font-light">
@@ -203,17 +215,25 @@
           Art by Jasper Calico
         </h1>
         <p class="text-center mb-6 text-gray-400"></p>
+        <div class="search-wrapper" style="position: relative;">
+          <input
+            v-model="search"
+            type="text"
+            placeholder="Search my doodles..."
+            class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition"
+          />
+  
+  <div class="temari-hang">
+    <img src="temari-hang.png" alt="Temari" />
+  </div>
+</div>
 
-        <input
-          v-model="search"
-          type="text"
-          placeholder="Search my doodles..."
-          class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition"
-        />
 
         <div class="mb-4">
           <p class="text-sm text-gray-400 mb-1">Filter by tags:</p>
-          <div class="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+          <div
+            class="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
+          >
             <button
               v-for="tag in uniqueTags"
               :key="tag"
@@ -243,7 +263,7 @@
               style="min-height: 320px"
             >
               <button
-                @click="prevImage(image)"
+                @click.stop="prevImage(image)"
                 class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none"
                 :aria-label="'Previous image'"
                 v-if="image.urls.length > 1"
@@ -272,7 +292,7 @@
                 @error="handleImageError(getCurrentImage(image))"
               />
               <button
-                @click="nextImage(image)"
+                @click.stop="nextImage(image)"
                 class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none"
                 :aria-label="'Next image'"
                 v-if="image.urls.length > 1"
@@ -345,6 +365,7 @@
           <button
             @click="closeLightbox"
             class="absolute top-4 right-4 text-gray-400 hover:text-white transition"
+            title="Close"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -397,7 +418,7 @@
       </div>
     </div>
 
-    <script src="app.js?v=1748226252"></script>
+    <script src="app.js?v=1748282120"></script>
     <script>
       // Blurred pastel stars background
       document.addEventListener("DOMContentLoaded", function () {
