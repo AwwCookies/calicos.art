@@ -220,5 +220,27 @@ Vue.createApp({
         this.$forceUpdate();
       })
       .catch((err) => console.error("Error loading data.json:", err));
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const container = document.querySelector("#bg-stars");
+      const colors = ["#f5e0dc", "#b4befe", "#f9e2af"]; // pastel pink, blue, yellow
+      const count = 40;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        const size = Math.random() * 2 + 2;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const duration = Math.random() * 10 + 10;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.backgroundColor = color;
+        star.style.top = `${top}vh`;
+        star.style.left = `${left}vw`;
+        star.style.animationDuration = `${duration}s`;
+        container.appendChild(star);
+      }
+    });
   },
 }).mount("#app");

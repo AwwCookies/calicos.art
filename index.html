@@ -262,6 +262,14 @@
               class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden"
               style="min-height: 320px"
             >
+              <!-- Spinner -->
+              <div v-if="loadingImages.has(getCurrentImage(image))" class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                <svg class="animate-spin h-8 w-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </div>
+              <!-- Previous Button -->
               <button
                 @click.stop="prevImage(image)"
                 class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none"
@@ -282,6 +290,7 @@
                   />
                 </svg>
               </button>
+              <!-- Image -->
               <img
                 v-show="!loadingImages.has(getCurrentImage(image))"
                 :src="getCurrentImage(image)"
@@ -291,6 +300,7 @@
                 @load="handleImageLoad(getCurrentImage(image))"
                 @error="handleImageError(getCurrentImage(image))"
               />
+              <!-- Next Button -->
               <button
                 @click.stop="nextImage(image)"
                 class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full p-2 focus:outline-none"
@@ -318,6 +328,14 @@
               class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden"
               style="min-height: 320px"
             >
+              <!-- Spinner -->
+              <div v-if="loadingImages.has(image.url)" class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                <svg class="animate-spin h-8 w-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </div>
+              <!-- Image -->
               <img
                 v-show="!loadingImages.has(image.url)"
                 :src="image.url"
@@ -418,30 +436,6 @@
       </div>
     </div>
 
-    <script src="app.js?v=1748282120"></script>
-    <script>
-      // Blurred pastel stars background
-      document.addEventListener("DOMContentLoaded", function () {
-        const container = document.querySelector("#bg-stars");
-        const colors = ["#f5e0dc", "#b4befe", "#f9e2af"]; // pastel pink, blue, yellow
-        const count = 40;
-        for (let i = 0; i < count; i++) {
-          const star = document.createElement("div");
-          star.classList.add("star");
-          const size = Math.random() * 2 + 2;
-          const color = colors[Math.floor(Math.random() * colors.length)];
-          const top = Math.random() * 100;
-          const left = Math.random() * 100;
-          const duration = Math.random() * 10 + 10;
-          star.style.width = `${size}px`;
-          star.style.height = `${size}px`;
-          star.style.backgroundColor = color;
-          star.style.top = `${top}vh`;
-          star.style.left = `${left}vw`;
-          star.style.animationDuration = `${duration}s`;
-          container.appendChild(star);
-        }
-      });
-    </script>
+    <script src="app.js?v=1748390251"></script>
   </body>
 </html>
