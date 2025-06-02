@@ -16,11 +16,11 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://calicos.art/" />
-    <meta property="og:image" content="https://s3.calicos.art/d2857995e90f9e6423c400b71084650a8594bf6b42ec9b9e827909414f7bf1cc3d88d652" />
+    <meta property="og:image" content="https://s3.calicos.art/79f01cce659234f6931aa5626ac29566c683b6a1607508733ce9038dadafb2b2881365ed" />
     <meta property="og:image:width" content="64" />
     <meta property="og:image:height" content="64" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:image" content="https://s3.calicos.art/d2857995e90f9e6423c400b71084650a8594bf6b42ec9b9e827909414f7bf1cc3d88d652" />
+    <meta name="twitter:image" content="https://s3.calicos.art/79f01cce659234f6931aa5626ac29566c683b6a1607508733ce9038dadafb2b2881365ed" />
     <meta name="twitter:image:width" content="64" />
     <meta name="twitter:image:height" content="64" />
     <meta name="robots" content="index, follow" />
@@ -205,6 +205,41 @@
         height: 60px; /* Resize as needed */
         transform: rotate(5deg); /* Optional little wobble for life */
       }
+
+      /* Force 1:1 aspect ratio for card images */
+      .image-container {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        position: relative;
+        overflow: hidden;
+        background-color: #111827;
+      }
+
+      .image-container img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Grid with minimum card width to maintain 1:1 ratio */
+      .art-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem 1.5rem;
+        margin: 0 1.5rem;
+      }
+
+      /* Ensure cards maintain their aspect ratio */
+      .art-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 280px;
+        max-width: 100%;
+      }
     </style>
   </head>
   <body class="text-gray-200 font-light">
@@ -249,21 +284,16 @@
         </div>
       </div>
 
-      <div
-        class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 p-4 mx-6"
-      >
+      <div class="art-grid">
         <div
           v-for="image in filteredImages"
           :key="image.order || image.url || image.description"
-          class="glass-card shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full border border-gray-700 overflow-hidden relative group"
+          class="art-card glass-card shadow-lg hover:shadow-2xl transition-shadow duration-300 h-full border border-gray-700 overflow-hidden relative group"
           :style="getCardStyle(image)"
         >
           <!-- Image Container -->
           <template v-if="Array.isArray(image.urls) && image.urls.length > 0">
-            <div
-              class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden"
-              style="min-height: 320px"
-            >
+            <div class="image-container">
               <!-- Spinner -->
               <div v-if="loadingImages.has(getCurrentImage(image))" class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
                 <svg class="animate-spin h-8 w-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -298,7 +328,7 @@
                 :src="getCurrentImage(image)"
                 crossorigin="anonymous"
                 alt="Artwork"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="transition-transform duration-500 group-hover:scale-105"
                 @load="handleImageLoad(getCurrentImage(image))"
                 @error="handleImageError(getCurrentImage(image))"
               />
@@ -326,10 +356,7 @@
             </div>
           </template>
           <template v-else>
-            <div
-              class="relative w-full bg-gray-900 flex items-center justify-center overflow-hidden"
-              style="min-height: 320px"
-            >
+            <div class="image-container">
               <!-- Spinner -->
               <div v-if="loadingImages.has(image.url)" class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
                 <svg class="animate-spin h-8 w-8 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -343,7 +370,7 @@
                 :src="image.url"
                 crossorigin="anonymous"
                 alt="Artwork"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="transition-transform duration-500 group-hover:scale-105"
                 @load="handleImageLoad(image.url)"
                 @error="handleImageError(image.url)"
               />
@@ -438,6 +465,6 @@
       </div>
     </div>
 
-    <script src="app.js?v=1748808547"></script>
+    <script src="app.js?v=1748842158"></script>
   </body>
 </html>
