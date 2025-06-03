@@ -85,30 +85,39 @@ Vue.createApp({
       }
     },
     handleImageError(url, event) {
-      this.loadingImages.delete(url);
-      // More detailed error info
-      const errTarget = event && event.target ? event.target : {};
-      const errorInfo = {
-        url: url,
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        error: event ? event.type : 'unknown',
-        src: errTarget.src || '',
-        alt: errTarget.alt || '',
-        naturalWidth: errTarget.naturalWidth,
-        naturalHeight: errTarget.naturalHeight,
-        complete: errTarget.complete,
-        referrer: document.referrer,
-        pageUrl: window.location.href,
-        stack: (new Error().stack || '').toString(),
-        outerHTML: errTarget.outerHTML || '',
-        currentTime: Date.now(),
-        cookies: document.cookie,
-        // Add more fields as needed
-      };
-      this.imageErrors.push(errorInfo);
-      if (this.imageErrors.length > 50) {
-        this.imageErrors = this.imageErrors.slice(-50);
+      try {
+        this.loadingImages.delete(url);
+        // More detailed error info
+        const errTarget = event && event.target ? event.target : {};
+        const errorInfo = {
+          url: url,
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent,
+          error: event ? event.type : 'unknown',
+          src: errTarget.src || '',
+          alt: errTarget.alt || '',
+          naturalWidth: errTarget.naturalWidth,
+          naturalHeight: errTarget.naturalHeight,
+          complete: errTarget.complete,
+          referrer: document.referrer,
+          pageUrl: window.location.href,
+          stack: (new Error().stack || '').toString(),
+          outerHTML: errTarget.outerHTML || '',
+          currentTime: Date.now(),
+          cookies: document.cookie,
+        };
+        this.imageErrors.push(errorInfo);
+        if (this.imageErrors.length > 50) {
+          this.imageErrors = this.imageErrors.slice(-50);
+        }
+      } catch (err) {
+        this.imageErrors.push({
+          url,
+          error: 'Exception in handleImageError',
+          message: err && err.message,
+          stack: err && err.stack,
+          timestamp: new Date().toISOString(),
+        });
       }
     },
     toggleDebugPanel() {
