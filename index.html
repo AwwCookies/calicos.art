@@ -438,6 +438,59 @@
       </div>
     </div>
 
-    <script src="app.js?v=1748915063"></script>
+    <script src="app.js?v=1748922503"></script>
+    <div id="logOutput" style="font-family: monospace; white-space: pre-wrap; padding: 1em; background: #111; color: #eee;"></div>
+
+<script>
+(function() {
+  const logDiv = document.getElementById('logOutput');
+
+  function writeToLog(type, ...args) {
+    const color = {
+      log: '#ccc',
+      info: '#6cf',
+      warn: 'yellow',
+      error: 'red'
+    }[type] || '#ccc';
+
+    const msg = args.map(a => {
+      try {
+        return typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a);
+      } catch {
+        return '[Unserializable object]';
+      }
+    }).join(' ');
+
+    const line = document.createElement('div');
+    line.style.color = color;
+    line.textContent = `[${type}] ${msg}`;
+    logDiv.appendChild(line);
+  }
+
+  const orig = {
+    log: console.log,
+    info: console.info,
+    warn: console.warn,
+    error: console.error
+  };
+
+  ['log', 'info', 'warn', 'error'].forEach(type => {
+    console[type] = function(...args) {
+      orig[type].apply(console, args);
+      writeToLog(type, ...args);
+    };
+  });
+
+  // Also catch unhandled JS errors
+  window.addEventListener('error', function(e) {
+    writeToLog('error', 'Unhandled Error:', e.message, e.filename, `Line: ${e.lineno}, Col: ${e.colno}`);
+  });
+
+  window.addEventListener('unhandledrejection', function(e) {
+    writeToLog('error', 'Unhandled Promise Rejection:', e.reason);
+  });
+})();
+</script>
+
   </body>
 </html>
