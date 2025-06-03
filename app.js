@@ -9,6 +9,8 @@ Vue.createApp({
       dominantColors: {},
       tiltDegrees: {},
       lightboxImage: null, // Track the currently selected image for the lightbox
+      imageErrors: [], // Track image loading errors
+      showDebugPanel: false, // Toggle for error panel
     };
   },
   computed: {
@@ -82,8 +84,32 @@ Vue.createApp({
         } catch (e) {}
       }
     },
-    handleImageError(url) {
+    handleImageError(url, event) {
       this.loadingImages.delete(url);
+      // Log error details
+      const errorInfo = {
+        url: url,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        error: event ? event.type : 'unknown',
+        target: event && event.target ? {
+          src: event.target.src,
+          naturalWidth: event.target.naturalWidth,
+          naturalHeight: event.target.naturalHeight,
+          complete: event.target.complete
+        } : null
+      };
+      this.imageErrors.push(errorInfo);
+      // Keep only last 20 errors
+      if (this.imageErrors.length > 20) {
+        this.imageErrors = this.imageErrors.slice(-20);
+      }
+    },
+    toggleDebugPanel() {
+      this.showDebugPanel = !this.showDebugPanel;
+    },
+    clearImageErrors() {
+      this.imageErrors = [];
     },
     getCardStyle(image) {
       const key = image.order || image.url || image.description;

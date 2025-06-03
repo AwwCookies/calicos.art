@@ -128,71 +128,71 @@
             backdrop-filter: blur(10px); /* Frosted glass blur effect */
             border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for glass effect */
             border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-          }
-          
-          .glass-card:hover {
-            transform: scale(1.02); /* Slight zoom on hover */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-          }
-          
-          .group:hover h3 {
-            color: #f38ba8; /* Pastel pink */
-          }
-          
-          .cat-sticker {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            width: 40px;
-            height: 40px;
-            opacity: 0.85;
-            pointer-events: none;
-            z-index: 2;
-            transition: transform 0.3s ease;
-          }
-          
-          .group:hover .cat-sticker {
-            transform: scale(1.1);
-          }
-          
-          .tag-whimsical {
-            border-style: dashed;
-            border-width: 2px;
-            transition: transform 0.2s ease, background-color 0.2s ease,
-            color 0.2s ease;
-          }
-          
-          .tag-whimsical:hover {
-            transform: scale(1.1); /* Slight zoom on hover */
-            background-color: rgba(
-              255,
-              255,
-              255,
-              0
-              ); /* Slightly brighter background */
-            }
-            
-            .tag-whimsical[aria-pressed="true"] {
-              transform: scale(1.15); /* Slight zoom for active tag */
-              background-color: rgba(
-                255,
-                255,
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .glass-card:hover {
+        transform: scale(1.02); /* Slight zoom on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+      }
+
+      .group:hover h3 {
+        color: #f38ba8; /* Pastel pink */
+      }
+
+      .cat-sticker {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        opacity: 0.85;
+        pointer-events: none;
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .group:hover .cat-sticker {
+        transform: scale(1.1);
+      }
+
+      .tag-whimsical {
+        border-style: dashed;
+        border-width: 2px;
+        transition: transform 0.2s ease, background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      .tag-whimsical:hover {
+        transform: scale(1.1); /* Slight zoom on hover */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0
+        ); /* Slightly brighter background */
+      }
+
+      .tag-whimsical[aria-pressed="true"] {
+        transform: scale(1.15); /* Slight zoom for active tag */
+        background-color: rgba(
+          255,
+          255,
           255,
           0.2
-          ); /* Darker background for clicked state */
-          border-color: rgba(255, 255, 255, 0.5); /* Slightly brighter border */
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none; /* Internet Explorer 10+ */
-          scrollbar-width: none; /* Firefox */
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none; /* Chrome, Safari, and Opera */
-        }
-        .temari-hang {
-          position: absolute;
+        ); /* Darker background for clicked state */
+        border-color: rgba(255, 255, 255, 0.5); /* Slightly brighter border */
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
+        scrollbar-width: none; /* Firefox */
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+      }
+      .temari-hang {
+        position: absolute;
         top: 36px; /* Adjust for how much she “hangs” */
         right: 20px; /* Or left, depending on where you want her */
         z-index: 10;
@@ -200,7 +200,7 @@
         scale: 0.8; /* Slightly smaller */
         pointer-events: none; /* So it doesn’t block the search bar */
       }
-      
+
       .temari-hang img {
         height: 60px; /* Resize as needed */
         transform: rotate(5deg); /* Optional little wobble for life */
@@ -210,8 +210,7 @@
   <body class="text-gray-200 font-light">
     <!-- Blurred pastel stars background -->
     <div id="bg-stars"></div>
-    <div id="logOutput" style="font-family: monospace; white-space: pre-wrap; padding: 1em; background: #111; color: #eee;"></div>
-    
+
     <div id="app">
       <div class="p-6 max-w-6xl mx-auto">
         <h1 class="text-4xl font-bold text-center mb-2 text-gray-100">
@@ -220,10 +219,10 @@
         <p class="text-center mb-6 text-gray-400"></p>
         <div class="search-wrapper" style="position: relative;">
           <input
-          v-model="search"
-          type="text"
-          placeholder="Search my doodles..."
-          class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition"
+            v-model="search"
+            type="text"
+            placeholder="Search my doodles..."
+            class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-gray-100 border border-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-gray-600 focus:outline-none transition"
           />
   
   <div class="temari-hang">
@@ -246,6 +245,50 @@
             >
               {{ tag }}
             </button>
+          </div>
+        </div>
+        
+        <!-- Debug Panel for Image Errors -->
+        <div class="mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <button
+              @click="toggleDebugPanel"
+              class="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-sm transition"
+            >
+              🐛 Debug Panel {{ showDebugPanel ? '▼' : '▶' }} ({{ imageErrors.length }} errors)
+            </button>
+            <button
+              v-if="imageErrors.length > 0"
+              @click="clearImageErrors"
+              class="px-3 py-1 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm transition"
+            >
+              Clear Errors
+            </button>
+          </div>
+          <div v-if="showDebugPanel" class="bg-gray-800 border border-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto">
+            <h3 class="text-lg font-semibold text-red-400 mb-2">Image Load Errors</h3>
+            <div v-if="imageErrors.length === 0" class="text-gray-400 italic">
+              No errors logged yet
+            </div>
+            <div v-for="(error, index) in imageErrors" :key="index" class="mb-3 pb-3 border-b border-gray-700 last:border-b-0">
+              <div class="text-sm">
+                <div class="text-red-400 font-mono break-all">{{ error.url }}</div>
+                <div class="text-gray-300 mt-1">
+                  <span class="font-semibold">Time:</span> {{ new Date(error.timestamp).toLocaleString() }}
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Error:</span> {{ error.error }}
+                </div>
+                <div v-if="error.target" class="text-gray-400 text-xs mt-1">
+                  Size: {{ error.target.naturalWidth }}×{{ error.target.naturalHeight }} | 
+                  Complete: {{ error.target.complete }}
+                </div>
+                <details class="mt-2">
+                  <summary class="text-blue-400 cursor-pointer text-xs">User Agent</summary>
+                  <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.userAgent }}</div>
+                </details>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -301,7 +344,7 @@
                 alt="Artwork"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 @load="handleImageLoad(getCurrentImage(image))"
-                @error="handleImageError(getCurrentImage(image))"
+                @error="handleImageError(getCurrentImage(image), $event)"
               />
               <!-- Next Button -->
               <button
@@ -346,7 +389,7 @@
                 alt="Artwork"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 @load="handleImageLoad(image.url)"
-                @error="handleImageError(image.url)"
+                @error="handleImageError(image.url, $event)"
               />
             </div>
           </template>
@@ -439,58 +482,7 @@
       </div>
     </div>
 
-    <script src="app.js?v=1748923030"></script>
-
-<script>
-(function() {
-  const logDiv = document.getElementById('logOutput');
-
-  function writeToLog(type, ...args) {
-    const color = {
-      log: '#ccc',
-      info: '#6cf',
-      warn: 'yellow',
-      error: 'red'
-    }[type] || '#ccc';
-
-    const msg = args.map(a => {
-      try {
-        return typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a);
-      } catch {
-        return '[Unserializable object]';
-      }
-    }).join(' ');
-
-    const line = document.createElement('div');
-    line.style.color = color;
-    line.textContent = `[${type}] ${msg}`;
-    logDiv.appendChild(line);
-  }
-
-  const orig = {
-    log: console.log,
-    info: console.info,
-    warn: console.warn,
-    error: console.error
-  };
-
-  ['log', 'info', 'warn', 'error'].forEach(type => {
-    console[type] = function(...args) {
-      orig[type].apply(console, args);
-      writeToLog(type, ...args);
-    };
-  });
-
-  // Also catch unhandled JS errors
-  window.addEventListener('error', function(e) {
-    writeToLog('error', 'Unhandled Error:', e.message, e.filename, `Line: ${e.lineno}, Col: ${e.colno}`);
-  });
-
-  window.addEventListener('unhandledrejection', function(e) {
-    writeToLog('error', 'Unhandled Promise Rejection:', e.reason);
-  });
-})();
-</script>
+    <script src="app.js?v=1748923322"></script>
 
   </body>
 </html>
