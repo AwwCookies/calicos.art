@@ -10,7 +10,7 @@ Vue.createApp({
       tiltDegrees: {},
       lightboxImage: null, // Track the currently selected image for the lightbox
       imageErrors: [], // Track image loading errors
-      showDebugPanel: false, // Toggle for error panel
+      showDebugPanel: false, // Toggle for error panel, hidden by default
     };
   },
   computed: {
@@ -281,6 +281,14 @@ Vue.createApp({
         star.style.left = `${left}vw`;
         star.style.animationDuration = `${duration}s`;
         container.appendChild(star);
+      }
+    });
+
+    // Keyboard shortcut: Ctrl+Shift+D to toggle debug panel
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        this.showDebugPanel = !this.showDebugPanel;
       }
     });
   },

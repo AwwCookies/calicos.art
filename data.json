@@ -1,16 +1,20 @@
 [
   {
-    "url": "https://s3.calicos.art/f2ee51185354b3ef3a663cbcd1b7c02a8d70aea2791736a1530ac3de34e58f77f6aac83d",
     "tags": [
       "clipstudio",
       "alien",
-      "digital"
+      "digital",
+      "comic"
     ],
     "title": "alien-cat",
-    "description": "alien-cat.clip",
+    "description": "alien-cat",
     "createdAt": "2025-06-02 21:42",
     "clip_file": "C:\\Users\\Emma\\Desktop\\Art\\alien-cat\\alien-cat.clip",
-    "order": 1
+    "order": 1,
+    "urls": [
+      "https://s3.calicos.art/2d4896b67edc8a49a7416406234af6f08a0dbc34eda770f143d11f6c99d0af9a13e7489e",
+      "https://s3.calicos.art/28743f2d3f45982f0f716f6ea249e037a847ca6b89d78e3d8a8cc0b44b07fb312ed3dad4"
+    ]
   },
   {
     "url": "https://s3.calicos.art/79f01cce659234f6931aa5626ac29566c683b6a1607508733ce9038dadafb2b2881365ed",
