@@ -272,20 +272,45 @@
             </div>
             <div v-for="(error, index) in imageErrors" :key="index" class="mb-3 pb-3 border-b border-gray-700 last:border-b-0">
               <div class="text-sm">
-                <div class="text-red-400 font-mono break-all">{{ error.url }}</div>
+                <div class="text-red-400 font-mono break-all">URL: {{ error.url }}</div>
                 <div class="text-gray-300 mt-1">
                   <span class="font-semibold">Time:</span> {{ new Date(error.timestamp).toLocaleString() }}
                 </div>
                 <div class="text-gray-300">
-                  <span class="font-semibold">Error:</span> {{ error.error }}
+                  <span class="font-semibold">Error Event:</span> {{ error.error }}
                 </div>
-                <div v-if="error.target" class="text-gray-400 text-xs mt-1">
-                  Size: {{ error.target.naturalWidth }}×{{ error.target.naturalHeight }} | 
-                  Complete: {{ error.target.complete }}
+                <div class="text-gray-300">
+                  <span class="font-semibold">Image src:</span> <span class="break-all">{{ error.src }}</span>
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Alt:</span> {{ error.alt }}
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Natural Size:</span> {{ error.naturalWidth }}×{{ error.naturalHeight }}
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Complete:</span> {{ error.complete }}
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Referrer:</span> <span class="break-all">{{ error.referrer }}</span>
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Page URL:</span> <span class="break-all">{{ error.pageUrl }}</span>
+                </div>
+                <div class="text-gray-300">
+                  <span class="font-semibold">Cookies:</span> <span class="break-all">{{ error.cookies }}</span>
                 </div>
                 <details class="mt-2">
                   <summary class="text-blue-400 cursor-pointer text-xs">User Agent</summary>
                   <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.userAgent }}</div>
+                </details>
+                <details class="mt-2">
+                  <summary class="text-blue-400 cursor-pointer text-xs">Stack Trace</summary>
+                  <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.stack }}</div>
+                </details>
+                <details class="mt-2">
+                  <summary class="text-blue-400 cursor-pointer text-xs">Image HTML</summary>
+                  <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.outerHTML }}</div>
                 </details>
               </div>
             </div>
@@ -482,7 +507,7 @@
       </div>
     </div>
 
-    <script src="app.js?v=1748923322"></script>
+    <script src="app.js?v=1748923472"></script>
 
   </body>
 </html>

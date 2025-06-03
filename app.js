@@ -86,23 +86,29 @@ Vue.createApp({
     },
     handleImageError(url, event) {
       this.loadingImages.delete(url);
-      // Log error details
+      // More detailed error info
+      const errTarget = event && event.target ? event.target : {};
       const errorInfo = {
         url: url,
         timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent,
         error: event ? event.type : 'unknown',
-        target: event && event.target ? {
-          src: event.target.src,
-          naturalWidth: event.target.naturalWidth,
-          naturalHeight: event.target.naturalHeight,
-          complete: event.target.complete
-        } : null
+        src: errTarget.src || '',
+        alt: errTarget.alt || '',
+        naturalWidth: errTarget.naturalWidth,
+        naturalHeight: errTarget.naturalHeight,
+        complete: errTarget.complete,
+        referrer: document.referrer,
+        pageUrl: window.location.href,
+        stack: (new Error().stack || '').toString(),
+        outerHTML: errTarget.outerHTML || '',
+        currentTime: Date.now(),
+        cookies: document.cookie,
+        // Add more fields as needed
       };
       this.imageErrors.push(errorInfo);
-      // Keep only last 20 errors
-      if (this.imageErrors.length > 20) {
-        this.imageErrors = this.imageErrors.slice(-20);
+      if (this.imageErrors.length > 50) {
+        this.imageErrors = this.imageErrors.slice(-50);
       }
     },
     toggleDebugPanel() {
