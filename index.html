@@ -247,77 +247,7 @@
             </button>
           </div>
         </div>
-        
-        <!-- Debug Panel for Image Errors -->
-        <div class="mb-4">
-          <div class="flex items-center gap-2 mb-2">
-            <button
-              @click="toggleDebugPanel"
-              class="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-sm transition"
-            >
-              🐛 Debug Panel {{ showDebugPanel ? '▼' : '▶' }} ({{ imageErrors.length }} errors)
-            </button>
-            <button
-              v-if="imageErrors.length > 0"
-              @click="clearImageErrors"
-              class="px-3 py-1 rounded bg-gray-600 hover:bg-gray-700 text-white text-sm transition"
-            >
-              Clear Errors
-            </button>
-          </div>
-          <!-- <div v-if="showDebugPanel" class="bg-gray-800 border border-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto"> -->
-            <div v-if="false" class="bg-gray-800 border border-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto"></div>
-            <h3 class="text-lg font-semibold text-red-400 mb-2">Image Load Errors</h3>
-            <div v-if="imageErrors.length === 0" class="text-gray-400 italic">
-              No errors logged yet
-            </div>
-            <div v-for="(error, index) in imageErrors" :key="index" class="mb-3 pb-3 border-b border-gray-700 last:border-b-0">
-              <div class="text-sm">
-                <div class="text-red-400 font-mono break-all">URL: {{ error.url }}</div>
-                <div class="text-gray-300 mt-1">
-                  <span class="font-semibold">Time:</span> {{ new Date(error.timestamp).toLocaleString() }}
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Error Event:</span> {{ error.error }}
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Image src:</span> <span class="break-all">{{ error.src }}</span>
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Alt:</span> {{ error.alt }}
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Natural Size:</span> {{ error.naturalWidth }}×{{ error.naturalHeight }}
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Complete:</span> {{ error.complete }}
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Referrer:</span> <span class="break-all">{{ error.referrer }}</span>
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Page URL:</span> <span class="break-all">{{ error.pageUrl }}</span>
-                </div>
-                <div class="text-gray-300">
-                  <span class="font-semibold">Cookies:</span> <span class="break-all">{{ error.cookies }}</span>
-                </div>
-                <details class="mt-2">
-                  <summary class="text-blue-400 cursor-pointer text-xs">User Agent</summary>
-                  <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.userAgent }}</div>
-                </details>
-                <details class="mt-2">
-                  <summary class="text-blue-400 cursor-pointer text-xs">Stack Trace</summary>
-                  <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.stack }}</div>
-                </details>
-                <details class="mt-2">
-                  <summary class="text-blue-400 cursor-pointer text-xs">Image HTML</summary>
-                  <div class="text-gray-400 text-xs mt-1 font-mono break-all">{{ error.outerHTML }}</div>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       <div
         class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 p-4 mx-6"
@@ -508,7 +438,7 @@
       </div>
     </div>
 
-    <script src="app.js?v=1750032274"></script>
+    <script src="app.js?v=1750032363"></script>
 
   </body>
 </html>
