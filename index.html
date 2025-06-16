@@ -249,7 +249,7 @@
         </div>
         
         <!-- Debug Panel for Image Errors -->
-        <!-- <div class="mb-4">
+        <div class="mb-4">
           <div class="flex items-center gap-2 mb-2">
             <button
               @click="toggleDebugPanel"
@@ -264,8 +264,9 @@
             >
               Clear Errors
             </button>
-          </div> -->
-          <div v-if="showDebugPanel" class="bg-gray-800 border border-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto">
+          </div>
+          <!-- <div v-if="showDebugPanel" class="bg-gray-800 border border-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto"> -->
+            <div v-if="false" class="bg-gray-800 border border-gray-700 rounded-lg p-4 max-h-64 overflow-y-auto"></div>
             <h3 class="text-lg font-semibold text-red-400 mb-2">Image Load Errors</h3>
             <div v-if="imageErrors.length === 0" class="text-gray-400 italic">
               No errors logged yet
@@ -507,7 +508,7 @@
       </div>
     </div>
 
-    <script src="app.js?v=1750032202"></script>
+    <script src="app.js?v=1750032274"></script>
 
   </body>
 </html>
